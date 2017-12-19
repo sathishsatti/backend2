@@ -19,6 +19,11 @@ public class UsersDetails implements Serializable{
 	private String lastName;
 	private String userName;
 	private String contact;
+	private String email;
+	private String password;
+	private String role;
+	private boolean isonline;
+	private boolean enable;
 	public int getUser_id() {
 		return user_id;
 	}
@@ -82,9 +87,5 @@ public class UsersDetails implements Serializable{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	private String email;
-	private String password;
-	private String role;
-	private boolean isonline;
-	private boolean enable;
+	
 }
