@@ -15,6 +15,7 @@ import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
 
 import com.niit.Dao.UsersDAO;
 import com.niit.Dao.UsersDAOImpl;
+import com.niit.model.JobDetails;
 import com.niit.model.UsersDetails;
 
 
@@ -53,7 +54,8 @@ Logger logger =LoggerFactory.getLogger(DBConfiguration.class);
 		sessionBuilder.addProperties(getHibernateProperties());
 
 		sessionBuilder.addAnnotatedClasses(UsersDetails.class);
-	
+
+		sessionBuilder.addAnnotatedClasses(JobDetails.class);
 		 
 		System.out.println("Session is created................!");
 
