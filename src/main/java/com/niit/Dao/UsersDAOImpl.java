@@ -144,5 +144,10 @@ Logger Logger=LoggerFactory.getLogger(UsersDAOImpl.class);
 		
 	}
 
+	public UsersDetails getUserByUsername(String username) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

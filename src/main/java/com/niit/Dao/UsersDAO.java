@@ -17,4 +17,5 @@ public interface UsersDAO {
 	public UsersDetails login(UsersDetails user);
 	public boolean isUsernameValid(String username);
 	public boolean isEmailValid(String email);
+	public UsersDetails getUserByUsername(String username);
 }

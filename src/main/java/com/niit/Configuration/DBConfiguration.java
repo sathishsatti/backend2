@@ -13,9 +13,13 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
 
+import com.niit.Dao.BlogPostDao;
+import com.niit.Dao.BlogPostDaoImpl;
+import com.niit.Dao.JobDao;
+import com.niit.Dao.JobDaoImpl;
 import com.niit.Dao.UsersDAO;
 import com.niit.Dao.UsersDAOImpl;
-import com.niit.model.JobDetails;
+import com.niit.model.Job;
 import com.niit.model.UsersDetails;
 
 
@@ -55,7 +59,9 @@ Logger logger =LoggerFactory.getLogger(DBConfiguration.class);
 
 		sessionBuilder.addAnnotatedClasses(UsersDetails.class);
 
-		sessionBuilder.addAnnotatedClasses(JobDetails.class);
+		sessionBuilder.addAnnotatedClasses(Job.class);
+
+	//	sessionBuilder.addAnnotatedClasses(BlogPost.class);
 		 
 		System.out.println("Session is created................!");
 
@@ -79,5 +85,23 @@ Logger logger =LoggerFactory.getLogger(DBConfiguration.class);
 		return new UsersDAOImpl(sessionFactory);
 	}
 	
+	@Autowired
+	@Bean(name = "blogPostDao")
+	public BlogPostDao getBlogPostDao(SessionFactory sessionFactory)
+	{
+
+		return new BlogPostDaoImpl(sessionFactory);
+	}
+	
+	
+	@Autowired
+	@Bean(name = "jobDao")
+	public JobDao getJobDao(SessionFactory sessionFactory)
+	{
+
+		return new JobDaoImpl(sessionFactory);
+	}
+	
 	
 }
+	

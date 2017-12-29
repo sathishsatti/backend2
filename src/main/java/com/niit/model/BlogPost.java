@@ -16,7 +16,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
-@Table(name="blogpost_s180133")
+@Table
 public class BlogPost {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -26,12 +26,14 @@ private String blogTitle;
 @Lob
 private String blogContent;
 private Date postedOn;
-@ManyToOne
+//@ManyToOne
 private UsersDetails postedBy;
 private boolean approved;
 private int likes;
-@OneToMany(mappedBy="blogPost",fetch=FetchType.EAGER)
+//@OneToMany(mappedBy="blogPost",fetch=FetchType.EAGER)
 private List<BlogComment> blogComments;
+
+
 public int getId() {
 	return id;
 }
@@ -79,6 +81,9 @@ public List<BlogComment> getBlogComments() {
 }
 public void setBlogComments(List<BlogComment> blogComments) {
 	this.blogComments = blogComments;
+}
+public void setPostedOn(java.util.Date date) {
+this.postedOn = postedOn;
 }
 
 

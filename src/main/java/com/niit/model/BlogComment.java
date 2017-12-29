@@ -13,15 +13,15 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name="blogcomment_s180133")
+@Table
 public class BlogComment {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 private int id;
-	@ManyToOne
+//	@ManyToOne
 	@JsonIgnore
 private BlogPost blogPost;
-	@ManyToOne
+//	@ManyToOne
 private UsersDetails commentedBy;
 private Date commentedOn;
 @Column(nullable=false)
@@ -55,6 +55,10 @@ public String getCommentText() {
 }
 public void setCommentText(String commentText) {
 	this.commentText = commentText;
+}
+public void setCommentedOn(java.util.Date date) {
+	// TODO Auto-generated method stub
+	this.commentedOn = commentedOn;
 }
 
 }

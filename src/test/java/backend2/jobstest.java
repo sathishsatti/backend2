@@ -1,4 +1,4 @@
-package backend2;
+/*package backend2;
 
 import static org.junit.Assert.*;
 
@@ -10,7 +10,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import com.niit.model.JobDetails;
+import com.niit.model.JobDetail;
 import com.niit.service.JobsService;
 
 
@@ -33,61 +33,61 @@ public class jobstest {
 	@Test
 	public void createJobsTest(){
 		
-		JobDetails jobDetails = new JobDetails();
-		jobDetails.setJobDesc("Responsible for coding, testing and deploying user friendly applications");
-		jobDetails.setJobTitle("Software Engineer");
-		jobDetails.setSkillsRequired("B.Tech");
-		jobDetails.setCompanyName("XYZ Pvt Ltd");
-		jobDetails.setLocation("Hyderabad");
-		jobDetails.setYrsOfExp("2+ Yrs");
-		jobDetails.setSalary("250000");
-		jobDetails.setPostedOn(new Date());
+		JobDetail jobDetail = new JobDetail();
+		jobDetail.setJobDesc("Responsible for coding, testing and deploying user friendly applications");
+		jobDetail.setJobTitle("Software Engineer");
+		jobDetail.setSkillsRequired("B.Tech");
+		jobDetail.setCompanyName("XYZ Pvt Ltd");
+		jobDetail.setLocation("Hyderabad");
+		jobDetail.setYrsOfExp("2+ Yrs");
+		jobDetail.setSalary("250000");
+		jobDetail.setPostedOn(new Date());
 		
-		assertTrue("Problem in storing Job details",jobsService.addJobs(jobDetails));
+		assertTrue("Problem in storing Job details",jobsService.addJobs(jobDetail));
 	}
 	
   
 	@Test
 	public void updateJobsTest(){
 		
-		JobDetails jobDetails = new JobDetails();
-		jobDetails.setId(142);
-		jobDetails.setJobDesc("Responsible for coding, testing and deploying user friendly applications");
-		jobDetails.setJobTitle("Software Engineer");
-		jobDetails.setSkillsRequired("B.Tech");
-		jobDetails.setCompanyName("ABC Pvt Ltd");
-		jobDetails.setLocation("Chennai");
-		jobDetails.setYrsOfExp("4+ Yrs");
-		jobDetails.setSalary("450000");
-		jobDetails.setPostedOn(new Date());
+		JobDetail jobDetail = new JobDetail();
+		jobDetail.setId(142);
+		jobDetail.setJobDesc("Responsible for coding, testing and deploying user friendly applications");
+		jobDetail.setJobTitle("Software Engineer");
+		jobDetail.setSkillsRequired("B.Tech");
+		jobDetail.setCompanyName("ABC Pvt Ltd");
+		jobDetail.setLocation("Chennai");
+		jobDetail.setYrsOfExp("4+ Yrs");
+		jobDetail.setSalary("450000");
+		jobDetail.setPostedOn(new Date());
 		
-		assertTrue("Problem in updating job details",jobsService.updateJobs(jobDetails));
+		assertTrue("Problem in updating job details",jobsService.updateJobs(jobDetail));
 	}
 	
   
 	@Test
 	public void deleteJobsTest(){
 		
-		JobDetails jobDetails = new JobDetails();
-		jobDetails.setId(142);
-		jobDetails.setJobDesc("Responsible for coding, testing and deploying user friendly applications");
-		jobDetails.setJobTitle("Software Engineer");
-		jobDetails.setSkillsRequired("B.Tech");
-		jobDetails.setCompanyName("XYZ Pvt Ltd");
-		jobDetails.setLocation("Hyderabad");
-		jobDetails.setYrsOfExp("2+ Yrs");
-		jobDetails.setSalary("250000");
-		jobDetails.setPostedOn(new Date());
+		JobDetail jobDetail = new JobDetail();
+		jobDetail.setId(142);
+		jobDetail.setJobDesc("Responsible for coding, testing and deploying user friendly applications");
+		jobDetail.setJobTitle("Software Engineer");
+		jobDetail.setSkillsRequired("B.Tech");
+		jobDetail.setCompanyName("XYZ Pvt Ltd");
+		jobDetail.setLocation("Hyderabad");
+		jobDetail.setYrsOfExp("2+ Yrs");
+		jobDetail.setSalary("250000");
+		jobDetail.setPostedOn(new Date());
 		
-		assertTrue("Problem in deleting job details",jobsService.deleteJobs(jobDetails));
+		assertTrue("Problem in deleting job details",jobsService.deleteJobs(jobDetail));
 	}
 	
 	@Test
 	public void getJobTest(){
 		
-		JobDetails jobDetails = jobsService.getJobs(141);
-		assertNotNull("Problem in retrieving Job details",jobDetails);
-		System.out.println("Job Id : "+jobDetails.getId()+"  Job Desc: "+jobDetails.getJobDesc()+"  Job Profile : "+jobDetails.getJobTitle()+"  Job Qualification : "+jobDetails.getSkillsRequired()+"  Job "+jobDetails.getPostedOn());
+		JobDetail jobDetail = jobsService.getJobs(141);
+		assertNotNull("Problem in retrieving Job details",jobDetail);
+		System.out.println("Job Id : "+jobDetail.getId()+"  Job Desc: "+jobDetail.getJobDesc()+"  Job Profile : "+jobDetail.getJobTitle()+"  Job Qualification : "+jobDetail.getSkillsRequired()+"  Job "+jobDetail.getPostedOn());
 		
 	}
 	
@@ -95,15 +95,15 @@ public class jobstest {
 	@Test
 	public void getAllJobsTest(){
 		
-		List<JobDetails> jobsList = jobsService.getAllJobs();
+		List<JobDetail> jobsList = jobsService.getAllJobs();
 		assertNotNull("Problem in retrieving All Jobs details",jobsList);
 		showJobsDetails(jobsList);
 		
 	}
 
-	private void showJobsDetails(List<JobDetails> jobsList) {
+	private void showJobsDetails(List<JobDetail> jobsList) {
 		
-		for (JobDetails jobDetails : jobsList) {
+		for (JobDetail jobDetails : jobsList) {
 			
 			System.out.println(" Job Id : "+jobDetails.getId());
 			System.out.println(" Job Desc : "+jobDetails.getJobDesc());
@@ -116,3 +116,4 @@ public class jobstest {
 	}
 }
 
+*/

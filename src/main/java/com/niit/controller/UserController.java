@@ -63,7 +63,7 @@ public class UserController {
 	    {
 	    	Error error=new Error("Unauthorized user");
 		    return new ResponseEntity<Error>(error,HttpStatus.UNAUTHORIZED);
-		}	   
+	    }	   
 	    else	
 	    {
 	        validUser.setIsonline(false);
