@@ -1,4 +1,4 @@
-package com.niit.Dao;
+package com.niit.dao;
 
 import com.niit.model.BlogPost;
 import com.niit.model.BlogPostLikes;

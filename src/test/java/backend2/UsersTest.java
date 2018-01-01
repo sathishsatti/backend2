@@ -1,4 +1,4 @@
-package backend2;
+/*package backend2;
 
 import static org.junit.Assert.*;
 
@@ -9,7 +9,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.annotation.ComponentScan;
 
 import com.niit.Configuration.DBConfiguration;
-import com.niit.Dao.UsersDAO;
+import com.niit.dao.UsersDAO;
 import com.niit.model.UsersDetails;
 
 @ComponentScan("com.niit")
@@ -42,3 +42,4 @@ static UsersDAO  usersDAO;
 		assertTrue("Problem in Inserting user", usersDAO.saveOrUpdate(user));	}
 
 }
+*/

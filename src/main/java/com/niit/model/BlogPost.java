@@ -1,37 +1,38 @@
 package com.niit.model;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
-@Table
+@Table(name="C_blogPost")
 public class BlogPost {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-private int id;
-@Column(unique=true,nullable=false)
-private String blogTitle;
-@Lob
-private String blogContent;
-private Date postedOn;
-//@ManyToOne
-private UsersDetails postedBy;
-private boolean approved;
-private int likes;
-//@OneToMany(mappedBy="blogPost",fetch=FetchType.EAGER)
-private List<BlogComment> blogComments;
+	private int id;
+	private String blogTitle;
+	@Lob
+	private String blogContent;
+	@ManyToOne
+	@JoinColumn(name="username")
+	private UsersDetails postedBy;
+	
+	private Date postedOn;
+	private boolean approved;
+
+	private int likes;
+    @OneToMany(mappedBy="blogPost",fetch=FetchType.EAGER)
+	private List<BlogComment> blogComments;
+
 
 
 public int getId() {
@@ -81,9 +82,6 @@ public List<BlogComment> getBlogComments() {
 }
 public void setBlogComments(List<BlogComment> blogComments) {
 	this.blogComments = blogComments;
-}
-public void setPostedOn(java.util.Date date) {
-this.postedOn = postedOn;
 }
 
 

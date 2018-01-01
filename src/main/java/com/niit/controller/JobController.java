@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.niit.Dao.JobDao;
 import com.niit.model.Job;
+import com.niit.dao.JobDao;
 import com.niit.model.Error;
 import com.niit.model.UsersDetails;
 

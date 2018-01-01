@@ -8,13 +8,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="blogpostlikes_s180133")
+@Table(name="blogpostlikes_USERS")
 public class BlogPostLikes {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 private int id;
-@ManyToOne
-private BlogPost blogPost;
+
 @ManyToOne
 private UsersDetails usersDetails;
 public UsersDetails getUsersDetails() {
@@ -29,15 +28,15 @@ public int getId() {
 public void setId(int id) {
 	this.id = id;
 }
+
+@ManyToOne
+private BlogPost blogPost;
+
 public BlogPost getBlogPost() {
 	return blogPost;
 }
 public void setBlogPost(BlogPost blogPost) {
 	this.blogPost = blogPost;
-}
-
-}
 
 
-
-
+}}

@@ -1,4 +1,4 @@
-package com.niit.Dao;
+package com.niit.dao;
 
 
 import java.util.List;
@@ -114,7 +114,6 @@ Logger Logger=LoggerFactory.getLogger(UsersDAOImpl.class);
 		query.setString(1, user.getPassword());
 		query.setBoolean(2, true);
 		UsersDetails validUsers=(UsersDetails)query.uniqueResult();
-		session.close();
 		System.out.println("Dao completed");
 		return validUsers;		
 	}

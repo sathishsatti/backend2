@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.niit.Dao.BlogPostDao;
-import com.niit.Dao.BlogPostLikesDao;
-import com.niit.Dao.UsersDAO;
+import com.niit.dao.BlogPostDao;
+import com.niit.dao.BlogPostLikesDao;
+import com.niit.dao.UsersDAO;
 import com.niit.model.BlogComment;
 import com.niit.model.BlogPost;
 import com.niit.model.BlogPostLikes;

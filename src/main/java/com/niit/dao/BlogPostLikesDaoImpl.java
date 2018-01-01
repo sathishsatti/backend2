@@ -1,4 +1,4 @@
-package com.niit.Dao;
+package com.niit.dao;
 
 import javax.transaction.Transactional;
 
@@ -13,8 +13,8 @@ import com.niit.model.BlogPostLikes;
 import com.niit.model.UsersDetails;
 
 @Repository
-@Transactional
-public class BlogPostDaoLikesImpl implements BlogPostLikesDao {
+
+public class BlogPostLikesDaoImpl implements BlogPostLikesDao {
 	@Autowired
 private SessionFactory sessionFactory;
 	public BlogPostLikes userLikes(BlogPost blogPost, UsersDetails usersDetails) {

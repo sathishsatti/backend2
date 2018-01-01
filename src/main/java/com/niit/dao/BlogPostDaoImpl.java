@@ -1,4 +1,4 @@
-package com.niit.Dao;
+package com.niit.dao;
 
 import java.util.List;
 
@@ -15,17 +15,17 @@ import com.niit.model.BlogPost;
 import com.niit.model.Notification;
 
 @Repository
-@Transactional
 public class BlogPostDaoImpl implements BlogPostDao {
+	
+	
 	@Autowired
 	private SessionFactory sessionFactory;
-
-	public BlogPostDaoImpl(SessionFactory sessionFactory) 
-	{
-
-		this.sessionFactory=sessionFactory;
 	
+	public BlogPostDaoImpl(SessionFactory sessionFactory) {
+		
+		this.sessionFactory=sessionFactory;
 	}
+
 
 	public void saveBlogPost(BlogPost blogPost) {
 		Session session = sessionFactory.getCurrentSession();
@@ -48,8 +48,8 @@ public class BlogPostDaoImpl implements BlogPostDao {
 	public void updateBlogPost(BlogPost blogPost, String rejectionReason) {
 		Session session = sessionFactory.getCurrentSession();
 		Notification notification = new Notification();
-	//	notification.setBlogTitle(blogPost.getBlogTitle());
-		//notification.setUserName(blogPost.getPostedBy().getUserName());// author
+		notification.setBlogTitle(blogPost.getBlogTitle());
+		notification.setUsername(blogPost.getPostedBy().getUserName());// author
 																		// who
 																		// posted
 																		// the
@@ -58,16 +58,16 @@ public class BlogPostDaoImpl implements BlogPostDao {
 									// radio button is selected by admin]
 			session.update(blogPost);// update blogpost set approved=1 where
 										// id=?
-	//		notification.setApprovalStatus("Approved");
+			notification.setApprovalStatus("Approved");
 			session.save(notification);// insert into notification values (...)
 		} else {// false admin rejects the blogpost [Reject radio button is
 				// selected by admin]
 			System.out.println(rejectionReason);
 			if (rejectionReason.equals(""))
-		//		notification.setRejectionReason("Not Mentioned by Admin");
-		//	else
-		//		notification.setRejectionReason(rejectionReason);
-		//	notification.setApprovalStatus("Rejected");
+				notification.setRejectionReason("Not Mentioned by Admin");
+			else
+				notification.setRejectionReason(rejectionReason);
+			notification.setApprovalStatus("Rejected");
 			session.save(notification);// insert into notification values (...)
 			session.delete(blogPost);// delete from blogpost where id=?
 
