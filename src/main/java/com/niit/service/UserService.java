@@ -9,11 +9,10 @@ public interface UserService {
 	public boolean saveOrUpdate(UsersDetails users);
 	public UsersDetails updateUser(UsersDetails users);
 	public void delete(UsersDetails user);
-	public UsersDetails getUser(String username);
+	public UsersDetails getUserByUsername(String username);
 	public UsersDetails viewUser(int userid);
 	public List<UsersDetails> UserList();
-	public UsersDetails login(UsersDetails user);
+	public UsersDetails login(String username,String password);
 	public boolean isUsernameValid(String username);
 	public boolean isEmailValid(String email);
-
 }

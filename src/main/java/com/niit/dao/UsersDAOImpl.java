@@ -14,124 +14,96 @@ import org.springframework.stereotype.Repository;
 
 import com.niit.model.UsersDetails;
 
-
 @Repository
 public class UsersDAOImpl implements UsersDAO {
-
-Logger Logger=LoggerFactory.getLogger(UsersDAOImpl.class);
 	
+	
+	Logger Logger=LoggerFactory.getLogger(UsersDAOImpl.class);
+
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	public UsersDAOImpl(SessionFactory sessionFactory) {
-	
-		this.sessionFactory=sessionFactory;
-	}
-
+	@Transactional
 	public boolean saveOrUpdate(UsersDetails users) {
-		Logger.info("save Operation started", users.getUser_id());
+		
+		Logger.info("save Operation started", users.getId());
 		Session session=sessionFactory.openSession();
 
 		Transaction tx=session.beginTransaction();
-		users.setEnable(true);
-		users.setIsonline(false);
+		users.setEnabled(true);
+		users.setOnline(false);
 		session.saveOrUpdate(users);
 		tx.commit();
-		Logger.info("User object has been saved successfually", users.getUser_id());
+		Logger.info("User object has been saved successfually", users.getId());
 	
-		return true;			
-	
+		return true;
 	}
-
-
-	
-	
-	
-	@Transactional
-	public UsersDetails updateUser(UsersDetails validUser) {
-		Session session=sessionFactory.openSession();
-		Transaction tx=session.beginTransaction();
-		session.update(validUser);
-		tx.commit();
-		
-		return validUser;		
-	}
-	
-	
-	
-	
-	
 	@Transactional
 	public void delete(UsersDetails user) {
 		sessionFactory.getCurrentSession().delete(user);
-		}
 		
-	
-	
-	
+	}
 		@SuppressWarnings("deprecation")
 		@Transactional
-		public UsersDetails getUser(String username) {
+		public UsersDetails getUserByUsername(String username) {
 		Criteria c=sessionFactory.getCurrentSession().createCriteria(UsersDetails.class);
 		c.add(Restrictions.eq("username", username));
 		UsersDetails user=(UsersDetails)c.uniqueResult();
 		return user;
-	}		
+	}
 	
-
-	
-		
-		
-		
-		@SuppressWarnings("deprecation")
-		@Transactional
-		public UsersDetails viewUser(int userid) {
+@SuppressWarnings("deprecation")
+@Transactional
+	public UsersDetails viewUser(int userid) {
 		Criteria c=sessionFactory.getCurrentSession().createCriteria(UsersDetails.class);
 		c.add(Restrictions.eq("userid", userid));
 		UsersDetails user=(UsersDetails) c.uniqueResult();
 		return user;
-				
+		
 	}
-
-
-		@SuppressWarnings({ "unchecked", "deprecation" })
-		@Transactional
-		public List<UsersDetails> UserList() {
+	
+	
+	@SuppressWarnings({ "unchecked", "deprecation" })
+	@Transactional
+	public List<UsersDetails> UserList() {
 		Criteria c=sessionFactory.openSession().createCriteria(UsersDetails.class);
 		List<UsersDetails> l = c.list();
-		return l;		
+		return l;
 	}
-
 
 	@SuppressWarnings({ "rawtypes", "deprecation" })
 	@Transactional
-	public UsersDetails login(UsersDetails user) {
+		public UsersDetails login(String username,String password) {
+		
 		Session session=sessionFactory.openSession();
-
-		Query query=session.createQuery("from UsersDetails where userName=? and password=? and enable=?");
+	//String hql = "from Users where userName= " + "'" + username + "'" + "and password= " + "'" + password + "'";
+		Query query=session.createQuery("from UsersDetails where username=? and password=? and enabled=?");
 	
-		query.setString(0, user.getUserName()); //for assigning the values to parameter username
-		query.setString(1, user.getPassword());
+		query.setString(0, username); //for assigning the values to parameter username
+		query.setString(1, password);
 		query.setBoolean(2, true);
 		UsersDetails validUsers=(UsersDetails)query.uniqueResult();
-		System.out.println("Dao completed");
-		return validUsers;		
+		session.close();
+		System.out.println("login Dao completed");
+		return validUsers;
 	}
-
-	@Transactional
-	public boolean isUsernameValid(String username) {
+	
+	
+		@Transactional
+		public boolean isUsernameValid(String username) {
 		List<UsersDetails> list = UserList();
 
 		for (UsersDetails usersDetail : list) {
-			if (usersDetail.getUserName().equals(username)) {
+			if (usersDetail.getUsername().equals(username)) {
 				return false;// invalid user
 			}
 		}
-		return true;// valid user		
+		return true;// valid user
 	}
+	
 
 	@Transactional
-	public boolean isEmailValid(String email) {
+		public boolean isEmailValid(String email) {
 		List<UsersDetails> list = UserList();
 
 		for (UsersDetails usersDetail : list) {
@@ -140,13 +112,15 @@ Logger Logger=LoggerFactory.getLogger(UsersDAOImpl.class);
 			}
 		}
 		return true;// valid user
-		
 	}
-
-	public UsersDetails getUserByUsername(String username) {
-		// TODO Auto-generated method stub
-		return null;
+	
+	public UsersDetails updateUser(UsersDetails validUser)
+	{
+		Session session=sessionFactory.openSession();
+		Transaction tx=session.beginTransaction();
+		session.update(validUser);
+		tx.commit();
+		session.clear();
+		return validUser;
 	}
-
-
-}
+	}

@@ -49,7 +49,7 @@ public class BlogPostDaoImpl implements BlogPostDao {
 		Session session = sessionFactory.getCurrentSession();
 		Notification notification = new Notification();
 		notification.setBlogTitle(blogPost.getBlogTitle());
-		notification.setUsername(blogPost.getPostedBy().getUserName());// author
+		notification.setUsername(blogPost.getPostedBy().getUsername());// author
 																		// who
 																		// posted
 																		// the

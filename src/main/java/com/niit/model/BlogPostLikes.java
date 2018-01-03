@@ -4,7 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -14,7 +13,7 @@ public class BlogPostLikes {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 private int id;
 
-@ManyToOne
+//@ManyToOne
 private UsersDetails usersDetails;
 public UsersDetails getUsersDetails() {
 	return usersDetails;
@@ -29,7 +28,7 @@ public void setId(int id) {
 	this.id = id;
 }
 
-@ManyToOne
+//@ManyToOne
 private BlogPost blogPost;
 
 public BlogPost getBlogPost() {

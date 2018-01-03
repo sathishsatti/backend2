@@ -1,4 +1,4 @@
-package com.niit.dao;
+/*package com.niit.dao;
 
 import javax.transaction.Transactional;
 
@@ -55,3 +55,4 @@ private SessionFactory sessionFactory;
 
 }
 
+*/

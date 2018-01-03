@@ -4,14 +4,11 @@ package com.niit.model;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -21,12 +18,12 @@ public class BlogComment {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
-	@ManyToOne
+//	@ManyToOne
 	@JoinColumn(name="username")
 	private UsersDetails commentedBy;
 	
 
-	@ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+//	@ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
 	@JoinColumn(name="blogpost_id")
 	private BlogPost blogPost;
 	
