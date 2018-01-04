@@ -1,14 +1,12 @@
-package com.niit.dao;
-
-
+package com.niit.service;
 
 import java.util.List;
 
 import com.niit.model.BlogComment;
 import com.niit.model.BlogPost;
 
+public interface BlogPostService {
 
-public interface BlogPostDao{
 	
 	public boolean createBlogPost(BlogPost post);
 	List<BlogPost> list(int approved);
@@ -19,6 +17,5 @@ public interface BlogPostDao{
 	List<BlogComment> getBlogComments(int blogId);
 	void addBlogComment(BlogComment blogComment);
 	
-
 
 }

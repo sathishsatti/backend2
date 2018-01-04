@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -14,72 +15,86 @@ import com.niit.model.BlogComment;
 import com.niit.model.BlogPost;
 import com.niit.model.Notification;
 
+
+
+@SuppressWarnings("deprecation")
 @Repository
 public class BlogPostDaoImpl implements BlogPostDao {
-	
-	
+
 	@Autowired
 	private SessionFactory sessionFactory;
 	
-	public BlogPostDaoImpl(SessionFactory sessionFactory) {
-		
-		this.sessionFactory=sessionFactory;
+	
+	private Session session;
+	
+	public boolean createBlogPost(BlogPost post) {
+	
+		session=sessionFactory.openSession();
+		session.saveOrUpdate(post);
+		Transaction tx=session.beginTransaction();
+		tx.commit();
+		session.clear();
+		session.close();	
+		return true;
 	}
 
-
-	public void saveBlogPost(BlogPost blogPost) {
-		Session session = sessionFactory.getCurrentSession();
-		session.save(blogPost);
-
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public List<BlogPost> list(int approved) {
+		Session session=sessionFactory.openSession();
+		Query query=session.createQuery("from BlogPost where approved="+approved);
+		List<BlogPost> blogPosts=query.list();
+		session.close();
+		return blogPosts;
 	}
 
-	public List<BlogPost> getBlogs(int approved) {
-		Session session = sessionFactory.getCurrentSession();
-		Query query = session.createQuery("from BlogPost where approved=" + approved);
-		return query.list();
+	public List<BlogPost> findLatest5Post() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
-	public BlogPost getBlogById(int id) {
-		Session session = sessionFactory.getCurrentSession();
-		BlogPost blogPost = (BlogPost) session.get(BlogPost.class, id);
+	public BlogPost findPostById(int id) {
+	
+		Session session=sessionFactory.openSession();
+		BlogPost blogPost=(BlogPost)session.get(BlogPost.class, id);
+		session.close();
 		return blogPost;
 	}
 
-	public void updateBlogPost(BlogPost blogPost, String rejectionReason) {
-		Session session = sessionFactory.getCurrentSession();
-		Notification notification = new Notification();
-		notification.setBlogTitle(blogPost.getBlogTitle());
-		notification.setUsername(blogPost.getPostedBy().getUsername());// author
-																		// who
-																		// posted
-																		// the
-																		// blog
-		if (blogPost.isApproved()) {// true admin approves the blogpost [Approve
-									// radio button is selected by admin]
-			session.update(blogPost);// update blogpost set approved=1 where
-										// id=?
-			notification.setApprovalStatus("Approved");
-			session.save(notification);// insert into notification values (...)
-		} else {// false admin rejects the blogpost [Reject radio button is
-				// selected by admin]
-			System.out.println(rejectionReason);
-			if (rejectionReason.equals(""))
-				notification.setRejectionReason("Not Mentioned by Admin");
-			else
-				notification.setRejectionReason(rejectionReason);
-			notification.setApprovalStatus("Rejected");
-			session.save(notification);// insert into notification values (...)
-			session.delete(blogPost);// delete from blogpost where id=?
+	@Transactional
+    public void updateBlogPost(BlogPost blogPost) {
+		
+    	Session session=sessionFactory.openSession();
+		session.update(blogPost);
+}
 
-		}
+	   public void deleteById(int id) {
+		session=sessionFactory.openSession();
+		Transaction tx=session.beginTransaction();
+		BlogPost post = session.byId(BlogPost.class).load(id);
+		session.delete(post);
+		tx.commit();
+		session.clear();
+		session.close();	
+		
 	}
 
-	public void addComment(BlogComment blogComment) {
-        Session session=sessionFactory.getCurrentSession();
-        session.save(blogComment);//insert into blogcomment_s180133 ...
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public List<BlogComment> getBlogComments(int blogId) {
+		   Session session=sessionFactory.openSession();
+		   Query query=session.createQuery("from BlogComment where blogPost.id="+blogId);
+		    
+		     List<BlogComment> blogComments=query.list();
+		     System.out.println("blogComments");
+		     session.close();
+		     return blogComments;
+	}
+
+	public void addBlogComment(BlogComment blogComment) {
+		Session session=sessionFactory.openSession();
+		session.save(blogComment);
+		session.flush();
+		session.close();
 		
 	}
 
 }
-
-

@@ -15,16 +15,19 @@ import com.niit.model.UsersDetails;
 @Repository
 
 public class BlogPostLikesDaoImpl implements BlogPostLikesDao {
+	
 	@Autowired
-private SessionFactory sessionFactory;
+	private SessionFactory sessionFactory;
+	
+	@Transactional
 	public BlogPostLikes userLikes(BlogPost blogPost, UsersDetails usersDetails) {
 		Session session=sessionFactory.getCurrentSession();
 		//select * from blogpostlikes_s180133 where blogpost_id=? and user_username=?
 		Query query=session.createQuery("from BlogPostLikes where blogPost.id=? and user.username=? ");
 		System.out.println("BlogPost id  " + blogPost.getId());
-		System.out.println("Username " + usersDetails.getUserName());
+		System.out.println("Username " + usersDetails.getUsername());
 		query.setInteger(0, blogPost.getId());
-		query.setString(1, usersDetails.getUserName());
+		query.setString(1, usersDetails.getUsername());
 		//blogPostlikes = null [glyphicon in black color] / 1 [glyphicon in blue color] object
 		BlogPostLikes blogPostLikes=(BlogPostLikes)query.uniqueResult();
 		System.out.println(blogPostLikes);
@@ -32,6 +35,7 @@ private SessionFactory sessionFactory;
 		
 	}
 
+	@Transactional
 	public BlogPost updateLikes(BlogPost blogPost, UsersDetails usersDetails) {
 		Session session=sessionFactory.getCurrentSession();
 		BlogPostLikes blogPostLikes=userLikes(blogPost,usersDetails);

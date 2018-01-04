@@ -1,4 +1,4 @@
-package com.niit.dao;
+/*package com.niit.dao;
 
 import com.niit.model.BlogPost;
 import com.niit.model.BlogPostLikes;
@@ -13,4 +13,4 @@ BlogPostLikes userLikes(BlogPost blogPost,UsersDetails usersDetails);
 //increment / decrement the number of likes
 //insert into blogpostlikes / delete from blogpostlikes 
 BlogPost updateLikes(BlogPost blogPost, UsersDetails usersDetails);
-}
+}*/

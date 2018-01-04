@@ -49,6 +49,7 @@ public class DBConfiguration {
 	}
 
 	@Autowired
+	
 	@Bean(name = "sessionFactory")
 	public SessionFactory getSessionFactory(DataSource dataSource) {
 		logger.info("========Hibernate Session Factory=========== ");
