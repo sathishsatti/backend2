@@ -21,79 +21,65 @@ import com.niit.model.Notification;
 @Repository
 public class BlogPostDaoImpl implements BlogPostDao {
 
+
 	@Autowired
 	private SessionFactory sessionFactory;
 	
-	
-	private Session session;
-	
-	public boolean createBlogPost(BlogPost post) {
-	
-		session=sessionFactory.openSession();
-		session.saveOrUpdate(post);
+	public void saveBlogPost(BlogPost blogPost) {
+		
+		System.out.println(blogPost.getBlogTitle());
+
+		Session session = sessionFactory.openSession();
 		Transaction tx=session.beginTransaction();
+		session.save(blogPost);
 		tx.commit();
-		session.clear();
-		session.close();	
-		return true;
-	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public List<BlogPost> list(int approved) {
-		Session session=sessionFactory.openSession();
-		Query query=session.createQuery("from BlogPost where approved="+approved);
-		List<BlogPost> blogPosts=query.list();
-		session.close();
-		return blogPosts;
 	}
-
-	public List<BlogPost> findLatest5Post() {
-		// TODO Auto-generated method stub
-		return null;
+@Transactional
+	public List<BlogPost> getBlogs(int approved) {
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("from BlogPost where approved=" + approved);
+		return query.list();
 	}
-
-	public BlogPost findPostById(int id) {
-	
-		Session session=sessionFactory.openSession();
-		BlogPost blogPost=(BlogPost)session.get(BlogPost.class, id);
-		session.close();
+@Transactional
+	public BlogPost getBlogById(int id) {
+		Session session = sessionFactory.getCurrentSession();
+		BlogPost blogPost = (BlogPost) session.get(BlogPost.class, id);
 		return blogPost;
 	}
+@Transactional
+	public void updateBlogPost(BlogPost blogPost, String rejectionReason) {
+		Session session = sessionFactory.getCurrentSession();
+		Notification notification = new Notification();
+		notification.setBlogTitle(blogPost.getBlogTitle());
+		notification.setUsername(blogPost.getPostedBy().getUsername());// author
+																		// who
+																		// posted
+																		// the
+																		// blog
+		if (blogPost.isApproved()) {// true admin approves the blogpost [Approve
+									// radio button is selected by admin]
+			session.update(blogPost);// update blogpost set approved=1 where
+										// id=?
+			notification.setApprovalStatus("Approved");
+			session.save(notification);// insert into notification values (...)
+		} else {// false admin rejects the blogpost [Reject radio button is
+				// selected by admin]
+			System.out.println(rejectionReason);
+			if (rejectionReason.equals(""))
+				notification.setRejectionReason("Not Mentioned by Admin");
+			else
+				notification.setRejectionReason(rejectionReason);
+			notification.setApprovalStatus("Rejected");
+			session.save(notification);// insert into notification values (...)
+			session.delete(blogPost);// delete from blogpost where id=?
 
-	@Transactional
-    public void updateBlogPost(BlogPost blogPost) {
-		
-    	Session session=sessionFactory.openSession();
-		session.update(blogPost);
-}
-
-	   public void deleteById(int id) {
-		session=sessionFactory.openSession();
-		Transaction tx=session.beginTransaction();
-		BlogPost post = session.byId(BlogPost.class).load(id);
-		session.delete(post);
-		tx.commit();
-		session.clear();
-		session.close();	
-		
+		}
 	}
-
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public List<BlogComment> getBlogComments(int blogId) {
-		   Session session=sessionFactory.openSession();
-		   Query query=session.createQuery("from BlogComment where blogPost.id="+blogId);
-		    
-		     List<BlogComment> blogComments=query.list();
-		     System.out.println("blogComments");
-		     session.close();
-		     return blogComments;
-	}
-
-	public void addBlogComment(BlogComment blogComment) {
-		Session session=sessionFactory.openSession();
-		session.save(blogComment);
-		session.flush();
-		session.close();
+@Transactional
+	public void addComment(BlogComment blogComment) {
+        Session session=sessionFactory.getCurrentSession();
+        session.save(blogComment);//insert into blogcomment_s180133 ...
 		
 	}
 

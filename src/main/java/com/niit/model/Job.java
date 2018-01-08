@@ -27,6 +27,7 @@ public class Job
 	private Date postedOn;
 	private String location;
 	private String companyName;
+	
 	public int getId() {
 		return id;
 	}

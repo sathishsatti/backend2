@@ -24,18 +24,19 @@ public class JobController
 {
 	@Autowired
 	private JobDao jobDao;
+	
 	@RequestMapping(value="/savejob", method=RequestMethod.POST)
 	public ResponseEntity<?> saveJob(@RequestBody Job job,HttpSession session)
 	{
-		UsersDetails usersDetails=(UsersDetails)session.getAttribute("usersDetails");
-		if(usersDetails==null)
+		UsersDetails validUser=(UsersDetails)session.getAttribute("validUser");
+		if(validUser==null)
 		{
 			Error error=new Error(3,"unAuthorized usersDetails");
 			return new ResponseEntity<Error>(error,HttpStatus.UNAUTHORIZED);
 		}
 		try
 		{
-			if(usersDetails.getRole().equals("Admin"))
+			if(validUser.getRole().equals("ADMIN"))
 			{
 				job.setPostedOn(new Date());
 				jobDao.saveJob(job);
@@ -49,7 +50,7 @@ public class JobController
 		}
 		catch (Exception e) 
 		{
-			Error error=new Error(1,"unable to insert job details...."+ e.getMessage());
+			Error error=new Error(1,"unable to insert jobdetails...."+ e.getMessage());
 			return new ResponseEntity<Error>(error,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -57,8 +58,8 @@ public class JobController
 	@RequestMapping(value="/getalljobs",method=RequestMethod.GET)
 	public ResponseEntity<?> getAllJobs(HttpSession session)
 	{
-		UsersDetails usersDetails =(UsersDetails)session.getAttribute("usersDetails");
-		if(usersDetails==null)
+		UsersDetails validUser =(UsersDetails)session.getAttribute("validUser");
+		if(validUser==null)
 		{
 			Error error=new Error(3,"UnAuthorized user");
 			return new ResponseEntity<Error>(error,HttpStatus.UNAUTHORIZED);
@@ -68,16 +69,17 @@ public class JobController
 	}
 	
 
-@RequestMapping(value="/getjobbyid/{id}",method=RequestMethod.GET)
-public ResponseEntity<?> getJobById(@PathVariable int id,HttpSession session){
-	UsersDetails usersDetails=(UsersDetails)session.getAttribute("usersDetails");
-    if(usersDetails==null){
-         Error error=new Error(3,"UnAuthorized user");
-            return new ResponseEntity<Error>(error,HttpStatus.UNAUTHORIZED);
+		@RequestMapping(value="/getjobbyid/{id}",method=RequestMethod.GET)
+			public ResponseEntity<?> getJobById(@PathVariable int id,HttpSession session){
+			UsersDetails validUser=(UsersDetails)session.getAttribute("validUser");
+			if(validUser==null){
+				Error error=new Error(3,"UnAuthorized user");
+				return new ResponseEntity<Error>(error,HttpStatus.UNAUTHORIZED);
     }
-    Job job=jobDao.getJobById(id);
-    return new ResponseEntity<Job>(job,HttpStatus.OK);
-}
-}
+			
+			Job job=jobDao.getJobById(id);
+			return new ResponseEntity<Job>(job,HttpStatus.OK);
+		}
+	}
 	
 	

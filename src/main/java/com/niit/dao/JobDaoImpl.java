@@ -2,9 +2,12 @@ package com.niit.dao;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -22,14 +25,16 @@ public class JobDaoImpl implements JobDao
 		this.sessionFactory=sessionFactory;
 	}
 
-	public void saveJob(Job job) 
-	{
-		Session session=sessionFactory.openSession();
-		session.save(job);
-		session.flush();
-		session.close();
-	}
-
+	public void saveJob(Job job) {
+		 Session session=sessionFactory.openSession();
+		 Transaction tx=session.beginTransaction();
+		 session.saveOrUpdate(job);
+		 tx.commit();
+		 
+		 return; 
+		}
+	
+	@Transactional
 	public List<Job> getAllJobs() 
 	{
 		Session session=sessionFactory.openSession();
@@ -39,6 +44,7 @@ public class JobDaoImpl implements JobDao
 		return jobs;
 	}
 	
+	@Transactional
 	public Job getJobById(int id) {
         Session session=sessionFactory.openSession();
         Job job=(Job)session.get(Job.class, id);
@@ -46,4 +52,4 @@ public class JobDaoImpl implements JobDao
         return job;
     }
 
-}
+	}

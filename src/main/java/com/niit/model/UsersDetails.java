@@ -81,13 +81,13 @@ public class UsersDetails implements Serializable{
 	public void setRole(String role) {
 		this.role = role;
 	}
-	public boolean isOnline() {
+	public boolean getOnline() {
 		return online;
 	}
 	public void setOnline(boolean online) {
 		this.online = online;
 	}
-	public boolean isEnabled() {
+	public boolean getEnabled() {
 		return enabled;
 	}
 	public void setEnabled(boolean enabled) {

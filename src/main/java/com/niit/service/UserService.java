@@ -6,6 +6,7 @@ import com.niit.model.UsersDetails;
 
 public interface UserService {
 	
+
 	public boolean saveOrUpdate(UsersDetails users);
 	public UsersDetails updateUser(UsersDetails users);
 	public void delete(UsersDetails user);

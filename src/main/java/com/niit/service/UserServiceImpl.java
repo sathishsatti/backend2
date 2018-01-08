@@ -58,8 +58,6 @@ import com.niit.model.UsersDetails;
 			return usersDAO.updateUser(users);
 		}
 
-	
 
-		
-		
+	
 	}

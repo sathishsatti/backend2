@@ -10,15 +10,14 @@ import com.niit.model.BlogPost;
 
 public interface BlogPostDao{
 	
-	public boolean createBlogPost(BlogPost post);
-	List<BlogPost> list(int approved);
-	public List<BlogPost> findLatest5Post();
-	public BlogPost findPostById(int id);
-	void updateBlogPost(BlogPost blogPost);
-	public void deleteById(int id);
-	List<BlogComment> getBlogComments(int blogId);
-	void addBlogComment(BlogComment blogComment);
-	
+	void saveBlogPost(BlogPost blogPost);
+	//return list of blogs waiting for approval(0) / list of blogs approved(1)
+	//getBlogs(0) -> list of blogs waiting for approval
+	//getBlogs(1) -> list of blogs approved
+	List<BlogPost> getBlogs(int approved);//values = 0 / 1
+	BlogPost getBlogById(int id);
+	void updateBlogPost(BlogPost blogPost,String rejectionReason);
+	void addComment(BlogComment blogComment);
 
 
 }

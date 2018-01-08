@@ -1,5 +1,4 @@
 package com.niit.model;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -55,5 +54,4 @@ public class Notification {
 	public void setViewed(boolean viewed) {
 		this.viewed = viewed;
 	}
-	
 }
