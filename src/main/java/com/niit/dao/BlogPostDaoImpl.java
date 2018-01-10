@@ -35,19 +35,22 @@ public class BlogPostDaoImpl implements BlogPostDao {
 		tx.commit();
 
 	}
-@Transactional
+	
+	@Transactional
 	public List<BlogPost> getBlogs(int approved) {
 		Session session = sessionFactory.getCurrentSession();
 		Query query = session.createQuery("from BlogPost where approved=" + approved);
 		return query.list();
 	}
-@Transactional
+	
+	@Transactional
 	public BlogPost getBlogById(int id) {
 		Session session = sessionFactory.getCurrentSession();
 		BlogPost blogPost = (BlogPost) session.get(BlogPost.class, id);
 		return blogPost;
 	}
-@Transactional
+
+		@Transactional
 	public void updateBlogPost(BlogPost blogPost, String rejectionReason) {
 		Session session = sessionFactory.getCurrentSession();
 		Notification notification = new Notification();
@@ -76,7 +79,8 @@ public class BlogPostDaoImpl implements BlogPostDao {
 
 		}
 	}
-@Transactional
+
+		@Transactional
 	public void addComment(BlogComment blogComment) {
         Session session=sessionFactory.getCurrentSession();
         session.save(blogComment);//insert into blogcomment_s180133 ...

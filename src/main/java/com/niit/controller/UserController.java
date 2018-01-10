@@ -16,6 +16,7 @@ import com.niit.model.UsersDetails;
 import com.niit.service.UserService;
 
 
+
 @RestController
 public class UserController {
 
@@ -104,4 +105,19 @@ public class UserController {
     }
   
 	
+@RequestMapping(value="/updateprofile",method=RequestMethod.PUT)
+public ResponseEntity<?> updateUserProfile(@RequestBody UsersDetails user,HttpSession session)
+{    
+    UsersDetails validUser=(UsersDetails)session.getAttribute("validUser");
+    if(validUser==null)
+    {
+        Error error=new Error("Unauthorized user");
+        return new ResponseEntity<Error>(error,HttpStatus.UNAUTHORIZED); 
+    }
+    userService .updateUser(validUser);
+    session.setAttribute("user", validUser);
+    return new ResponseEntity<Void>(HttpStatus.OK);
 }
+}
+
+	

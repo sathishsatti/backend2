@@ -18,4 +18,5 @@ public interface UsersDAO {
 	public UsersDetails login(String username,String password);
 	public boolean isUsernameValid(String username);
 	public boolean isEmailValid(String email);
+	
 }
