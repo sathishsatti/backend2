@@ -26,22 +26,25 @@ public class FriendDaoImpl implements FriendDao {
 	@Autowired
 	private SessionFactory sessionFac;
 
-	
+	@SuppressWarnings({ "deprecation", "unchecked" })
 	public List<UsersDetails> suggestedUserList(String username) {
-	Session session=sessionFac.getCurrentSession();
-	SQLQuery query=session.createSQLQuery("(select * from UsersDetails where username in "
-			                  +"(select username from UsersDetails where username!=? "
-			                   + "minus"
-			                  +"(select fromId from Friend where toId=?"
-			                   +" union select toId from Friend where fromId=? )))");
-	query.setString(0,username);
-	query.setString(1, username);
-	query.setString(2, username);
-	query.addEntity(UsersDetails.class);
-	List<UsersDetails> suggestedUsers=query.list();	
-	System.out.println("====suggestedUsers================================"+suggestedUsers);
-		return suggestedUsers;
+		Session session=sessionFac 	.openSession();
+		SQLQuery sqlQuery=session.createSQLQuery("select * from C_USERS where username in " 
+							 					+"(select username from C_USERS where username!=? "
+												+"minus "
+												+"(select fromId from Friend where toId=?"
+												+"union "
+												+"select toId from Friend where fromId=? ))");
+		sqlQuery.setString(0, username);
+		sqlQuery.setString(1, username);
+		sqlQuery.setString(2, username);
+		sqlQuery.addEntity(UsersDetails.class);
+		List<UsersDetails> suggestedUsersList=sqlQuery.list();
+		session.close();
+		return suggestedUsersList;
 	}
+
+	
 
 
 	public void addFriendRequest(Friend friend) {
@@ -73,8 +76,8 @@ public class FriendDaoImpl implements FriendDao {
 
 	public List<UsersDetails> listofFriends(String username) {
 		Session session=sessionFac.getCurrentSession();
-	SQLQuery query1=session.createSQLQuery("select * from  UsersDetails where username in " + "(select toId from Friend where fromId=? and status='A')");
-	SQLQuery query2=session.createSQLQuery("select * from UsersDetails where username in (select fromId from Friend where toId=? and status='A') ")	;
+	SQLQuery query1=session.createSQLQuery("select * from  C_USERS where username in " + "(select toId from Friend where fromId=? and status='A')");
+	SQLQuery query2=session.createSQLQuery("select * from C_USERS where username in (select fromId from Friend where toId=? and status='A') ")	;
 	query1.setString(0, username);
 	query2.setString(0, username);
 	query1.addEntity(UsersDetails.class);
@@ -85,6 +88,8 @@ public class FriendDaoImpl implements FriendDao {
 	return list1;
 	}
 
+	
+	
 	
 	public List<UsersDetails> listofMutualFriends(String loginId, String suggestedUsername) {
 		List<UsersDetails> friendlist1=listofFriends(loginId);
@@ -101,6 +106,11 @@ public class FriendDaoImpl implements FriendDao {
 		return mutualFriends;
 	}
 
+	
+
+
+	
+	
 
 	
 

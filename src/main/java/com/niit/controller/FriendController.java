@@ -25,12 +25,12 @@ public class FriendController {
 	@Autowired
 	private FriendDao friendDao;
 	
-	@RequestMapping(value="/suggestedusers",method=RequestMethod.POST)
+	@RequestMapping(value="/suggestedusers",method=RequestMethod.GET)
 	public ResponseEntity<?> getSuggestedUsers(HttpSession session)
 	{
 		UsersDetails validUser = (UsersDetails) session.getAttribute("validUser");
-		System.out.println("Valid User:"+validUser.getUsername());
-		
+	//System.out.println("Valid User:"+validUser.getUsername());
+			
 		if (validUser == null)
 		{
 			Error error = new Error(5, "UnAuthorized Access");
@@ -61,21 +61,21 @@ public class FriendController {
 	}
 	
 	
-	
 	@RequestMapping(value="/pendingrequests",method=RequestMethod.GET)
 	public ResponseEntity<?> pendingRequests(HttpSession session)
 	{
-		UsersDetails validUser = (UsersDetails) session.getAttribute("validUser");
+		UsersDetails validUser=(UsersDetails)session.getAttribute("validUser");
 		if (validUser == null)
 		{
 			Error error = new Error(5, "UnAuthorized Access");
 			return new ResponseEntity<Error>(error, HttpStatus.UNAUTHORIZED);
 		}
 		
-		//String username ="Bhavana";
+	
 		List<Friend> pendingRequests=friendDao.pendingRequests(validUser.getUsername());
 		return new ResponseEntity<List<Friend>>(pendingRequests,HttpStatus.OK);		
 	}
+	
 	
 	
 	
@@ -113,12 +113,12 @@ public class FriendController {
 	@RequestMapping(value="/mutualfriends/{toId}",method=RequestMethod.GET)
 	public ResponseEntity<?> getListofMutualFriends(@PathVariable String toId ,HttpSession session)
 	{
-		/*String username = (String) session.getAttribute("username");
+		String username = (String) session.getAttribute("username");
 		if (username == null)
 		{
-			ErrorClass error = new ErrorClass(5, "UnAuthorized Access");
-			return new ResponseEntity<ErrorClass>(error, HttpStatus.UNAUTHORIZED);
-		}*/
+			Error error = new Error (5, "UnAuthorized Access");
+			return new ResponseEntity<Error>(error, HttpStatus.UNAUTHORIZED);
+		}
 		UsersDetails validUser = (UsersDetails) session.getAttribute("validUser");
 		List<UsersDetails> mutualfriends=friendDao.listofMutualFriends(validUser.getUsername(), toId);
 		return new ResponseEntity<List<UsersDetails>>(mutualfriends,HttpStatus.OK);
